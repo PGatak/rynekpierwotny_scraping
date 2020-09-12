@@ -3,6 +3,8 @@ from urllib.parse import urljoin
 
 
 total_apartments_found = 0
+
+
 def parse_developer_details(text, task):
     investments = []
 
@@ -36,14 +38,11 @@ def parse_developer_details(text, task):
             if len(city_parts) > 1:
                 city_district, city_street = city_parts
             if len(city_parts) == 1:
-                city_street = city_parts[0]  # noqa: F841
+                city_street = city_parts[0]
 
             investment_data = {
                 "name": str(name.text),
                 "city_name": city_name,
-                # "city_district": city_district,
-                # "city_street": city_street,
-                # "street": str(p_street.text),
                 "url": investment_url,
                 "amount": int(p_amount.text),
                 "task": task,
@@ -57,21 +56,20 @@ def parse_developer_details(text, task):
             print("ERROR: parsing investment", e)
 
     return investments
+
+
 total_investments_found = 0
-# KONTENER DEVELOPERÓW
+
+
 def parse_developer_links(text, current_url):
     bs = BeautifulSoup(text, "lxml")
-    #pending już nie jest pustą listą?
     pending_urls = []
-    # KONTENERY Z DEVELOPERAMI
     article = bs.find("article")
-    # POJEDYNCZY WPIS - DEVELOPER
     divs_panel_body = article.find_all("div", {"class": "panel-body"})
     global total_investments_found
     for panel in divs_panel_body:
         header = panel.find("h2")
         link = header.find("a")
-        # LINK DO DEVELOPERA - ŁĄCZENIE
         new_url = link.attrs.get("href", None)
         new_url = urljoin(current_url, new_url)
         developer_name = str(link.text)
@@ -97,7 +95,6 @@ def parse_developer_links(text, current_url):
 
         pending_urls.append({
             "url": new_url,
-            # "details_url": current_url,
             "details": True,
             "developer_name": developer_name,
         })

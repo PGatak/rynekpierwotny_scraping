@@ -8,7 +8,6 @@ os.makedirs(os.path.join(DATA_DIR, "wykresy"), exist_ok=True)
 
 NEW_URLS_FILE = os.path.join(DATA_DIR, "new_reverse.json")
 DATA_FILE = os.path.join(DATA_DIR, "new.json")
-# os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "new.json")
 
 
 print(DATA_FILE)
@@ -32,4 +31,3 @@ print(reverse_dict)
 with open(NEW_URLS_FILE, "w+") as json_file:
     print("SAVING NEW REVERSE URLS", NEW_URLS_FILE)
     json.dump(reverse_dict, json_file, indent=4)
-
